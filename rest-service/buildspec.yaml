@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: corretto8
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn clean install
+artifacts:
+  files:
+    - "**/*"
+  discard-paths: no
+  base-directory: target
