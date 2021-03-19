@@ -1,23 +1,14 @@
 version: 0.2
-env:
-  variables:
-    JAVA_HOME: "/usr/lib/jvm/java-8-openjdk-amd64"
+
 phases:
-  install:
-    commands:
-    - echo installing maven...
-    - apt-get update -y
-    - apt-get install -y maven
   build:
     commands:
-    - echo building the jar
-    - mvn install
+      - echo building the jar
+      - mvn clean package
+  post_build:
+    commands:
+      - echo Build completed successfully
 artifacts:
   files:
-  - target/*.jar
-  - scripts/*.sh
-  - appspec.yml
-  discard-paths: yes
-cache:
-  paths:
-  - '/root/.m2/**/*'
+    - target/logistics-service.jar
+  discard-paths: 'yes'
