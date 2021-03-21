@@ -7,11 +7,15 @@ import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.logistics.hennex.enums.OrderIDFormat;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.util.Currency;
 import java.util.Date;
@@ -23,38 +27,39 @@ import java.util.Date;
 
 public class Order implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "OrderID", unique = true)
+	//@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "order_id", unique = true)
 	private String orderID;
 
-	@Column(name = "OrderDesc", nullable = false)
+	@Column(name = "order_desc", nullable = false)
 	private String orderDesc;
 	
-	@NotBlank
-	@Column(name = "OrderStatus")
+	//@NotBlank
+	@Column(name = "order_status")
 	private String orderStatus;
 
-	@NotBlank
-	@Column(name = "TotalOrderAmt", nullable = false)
+	//@NotNull
+	@Column(name = "total_order_amt", nullable = false)
 	private Double totalOrderAmt;
-
-	@Column(name = "AddlCharges", nullable = false)
+	
+	//@NotNull
+	@Column(name = "addl_charges", nullable = false)
 	private Double addlCharges;
 
-	@NotBlank
-	@Column(name = "FinalAmt", nullable = false)
+	//@NotNull
+	@Column(name = "final_amt", nullable = false)
 	private Double finalAmt;
 	
-	@NotBlank
-	@Column(name = "PaidDuringOrder", nullable = false)
+	//@NotNull
+	@Column(name = "paid_during_order", nullable = false)
 	private Double paidDuringOrder;
 	
-	@NotBlank
-	@Column(name = "BalancePayment", nullable = false)
+	//@NotNull
+	@Column(name = "balance_payment", nullable = false)
 	private Double balancePayment;
 	
-	@NotBlank
-	@Column(name = "PaymentStatus", nullable = false)
+	//@NotBlank
+	@Column(name = "payment_status", nullable = false)
 	private String paymentStatus;
 
 	@Column(name = "created_tmst", nullable = false, updatable = false)
@@ -62,8 +67,8 @@ public class Order implements Serializable {
 	@CreatedDate
 	private Date createdOn;
 
-	@NotBlank
-	@Column(name = "created_by", nullable = false)
+	//@NotBlank
+	@Column(name = "created_by", nullable = false, updatable = false)
 	private String createdBy;
 	
 	@Column(name = "updated_tmst", nullable = false)
@@ -71,7 +76,7 @@ public class Order implements Serializable {
 	@LastModifiedDate
 	private Date updatedOn;
 	
-	@NotBlank
+	//@NotBlank
 	@Column(name = "updated_by", nullable = false)
 	private String updatedBy;
 
@@ -80,7 +85,17 @@ public class Order implements Serializable {
 	}
 
 	public void setOrderID(String orderID) {
-		this.orderID = orderID;
+		if(orderID.startsWith("HNX")) {
+			this.orderID = orderID;
+		}else {
+		String orderIDPrefix = "";
+		if(this.getCreatedBy().startsWith("ADMIN")) {
+			orderIDPrefix = OrderIDFormat.ADMIN.getValue();
+		}else {
+			orderIDPrefix = OrderIDFormat.CUSTOMER.getValue();
+		}
+		this.orderID = orderIDPrefix+orderID;
+		}
 	}
 
 	public String getOrderDesc() {
