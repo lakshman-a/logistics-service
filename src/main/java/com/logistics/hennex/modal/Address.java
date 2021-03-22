@@ -12,43 +12,67 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "user_data")
+@Table(name = "address")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
 
 public class Address implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "AddressId")
+	@Column(name = "address_id")
 	private Long addressId;
 
 	@NotBlank
-	@Column(name = "AddressLine", nullable = false)
+	@Column(name = "address_line", nullable = false)
 	private String addressLine;
 	
 	@NotBlank
-	@Column(name = "Region", nullable = false)
+	@Column(name = "region", nullable = false)
 	private String region;
 
 	@NotBlank
-	@Column(name = "City", nullable = false)
+	@Column(name = "city", nullable = false)
 	private String city;
 
 	@NotBlank
-	@Column(name = "District", nullable = false)
+	@Column(name = "district", nullable = false)
 	private String district;
 
-	@NotBlank
-	@Column(name = "Pincode", nullable = false)
+	@NotNull
+	@Column(name = "pincode", nullable = false)
 	private Long pincode;
 	
 	@NotBlank
-	@Column(name = "State", nullable = false)
+	@Column(name = "state", nullable = false)
 	private String state;
+	
+	@NotBlank
+	@Column(name = "country", nullable = false)
+	private String country;
+
+	@Column(name = "created_tmst", nullable = false, updatable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@CreatedDate
+	private Date createdOn;
+
+	//@NotBlank
+	@Column(name = "created_by", nullable = false)
+	private String createdBy;
+	
+	@Column(name = "updated_tmst", nullable = false)
+	@Temporal(TemporalType.TIMESTAMP)
+	@LastModifiedDate
+	private Date updatedOn;
+	
+	//@NotBlank
+	@Column(name = "updated_by", nullable = false)
+	private String updatedBy;
 	
 	public Long getAddressId() {
 		return addressId;
@@ -146,27 +170,7 @@ public class Address implements Serializable {
 		this.updatedBy = updatedBy;
 	}
 
-	@NotBlank
-	@Column(name = "Country", nullable = false)
-	private String country;
-
-	@Column(name = "created_tmst", nullable = false, updatable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	@CreatedDate
-	private Date createdOn;
-
-	@NotBlank
-	@Column(name = "created_by", nullable = false)
-	private String createdBy;
 	
-	@Column(name = "updated_tmst", nullable = false)
-	@Temporal(TemporalType.TIMESTAMP)
-	@LastModifiedDate
-	private Date updatedOn;
-	
-	@NotBlank
-	@Column(name = "updated_by", nullable = false)
-	private String updatedBy;
 
 
 	

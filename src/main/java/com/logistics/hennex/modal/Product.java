@@ -23,48 +23,48 @@ import java.util.Date;
 public class Product implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "product_id")
 	private Long productId;
 
 	@NotBlank
-	@Column(name = "ProductName", nullable = false)
+	@Column(name = "product_name", nullable = false)
 	private String productName;
 
 	@NotBlank
-	@Column(name = "ProductCategory", nullable = false)
+	@Column(name = "product_category", nullable = false)
 	private String productCategory;
 
 	@NotBlank
-	@Column(name = "Qty", nullable = false)
+	@Column(name = "qty", nullable = false)
 	private Double qty;
 
 	@NotBlank
-	@Column(name = "ProductTotalWeight", nullable = false)
+	@Column(name = "product_total_weight", nullable = false)
 	private String productTotalWeight;
 
 	@NotBlank
-	@Column(name = "GoodTransitStatus", nullable = false)
-	private String goodTransitStatus;
+	@Column(name = "product_transit_status", nullable = false)
+	private String productTransitStatus;
 	
-	@Column(name = "TransitMode", nullable = false)
+	@Column(name = "transit_mode", nullable = false)
 	private String transitMode;
 
-	@Column(name = "Urgency", nullable = false)
+	@Column(name = "urgency", nullable = false)
 	private String urgency;
 	
-	@Column(name = "ProductUniqueID", nullable = false)
+	@Column(name = "product_unique_id", nullable = false)
 	private String productUniqueID;
 	
-	@Column(name = "HSN", nullable = false)
+	@Column(name = "hsn", nullable = false)
 	private String hsn;
 	
-	@Column(name = "GSTIN", nullable = false)
+	@Column(name = "gstin", nullable = false)
 	private String gstin;
 	
-	@Column(name = "AddlNotes", nullable = false)
+	@Column(name = "addl_notes", nullable = false)
 	private String addlNotes;
 	
-	@Column(name = "IndvItemAmt", nullable = false)
+	@Column(name = "indv_item_amt", nullable = false)
 	private Double indvItemAmt;
 
 	@Column(name = "created_tmst", nullable = false, updatable = false)
@@ -84,6 +84,18 @@ public class Product implements Serializable {
 	@NotBlank
 	@Column(name = "updated_by", nullable = false)
 	private String updatedBy;
+	
+	@ManyToOne
+	@JoinColumn(name="order_id",nullable=false)
+	private Orders order;
+	
+	public Orders getOrder() {
+		return order;
+	}
+
+	public void setOrder(Orders order) {
+		this.order = order;
+	}
 
 	public Long getProductId() {
 		return productId;
@@ -125,12 +137,12 @@ public class Product implements Serializable {
 		this.productTotalWeight = productTotalWeight;
 	}
 
-	public String getGoodTransitStatus() {
-		return goodTransitStatus;
+	public String getProductTransitStatus() {
+		return productTransitStatus;
 	}
 
-	public void setGoodTransitStatus(String goodTransitStatus) {
-		this.goodTransitStatus = goodTransitStatus;
+	public void setProductTransitStatus(String productTransitStatus) {
+		this.productTransitStatus = productTransitStatus;
 	}
 
 	public String getTransitMode() {
