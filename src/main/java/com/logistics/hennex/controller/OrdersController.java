@@ -31,6 +31,8 @@ import com.logistics.hennex.service.OrdersService;
 @RestController
 @RequestMapping(path = "/api")
 public class OrdersController {
+	
+	
 	@Autowired
 	private OrdersService ordersService;
 
@@ -43,7 +45,8 @@ public class OrdersController {
 	// Create a new Order
 	@PostMapping("/orders")
 	public Orders createOrder(@Valid @RequestBody Orders order) {
-		return ordersService.createOrder(order);
+		Orders x = order;
+		return ordersService.createOrder(x);
 	}
 
 	// Get a Single Order

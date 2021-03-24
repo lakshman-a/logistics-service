@@ -7,6 +7,7 @@ import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.logistics.hennex.enums.OrderIDFormat;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -17,6 +18,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Date;
 import java.util.List;
@@ -81,15 +83,22 @@ public class Orders implements Serializable {
 	@Column(name = "updated_by", nullable = false)
 	private String updatedBy;
 	
-	@OneToMany(mappedBy = "orders")
-	private List<Product> products;
+	@OneToMany(mappedBy = "orders", cascade = CascadeType.ALL)
+	//@JsonIgnore
+	//@JsonManagedReference
+	private List<Product> product=new ArrayList<Product>();
 	
 	public List<Product> getProducts() {
-		return products;
+		return product;
 	}
 
 	public void setProducts(List<Product> products) {
-		this.products = products;
+		this.product = products;
+
+        for(Product b : products) {
+            b.setOrder(this);
+        }
+		//this.products = products;
 	}
 
 	public String getOrderID() {

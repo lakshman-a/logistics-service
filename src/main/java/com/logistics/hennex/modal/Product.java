@@ -7,6 +7,8 @@ import javax.persistence.Id;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -34,13 +36,13 @@ public class Product implements Serializable {
 	@Column(name = "product_category", nullable = false)
 	private String productCategory;
 
-	@NotBlank
+	//@NotBlank
 	@Column(name = "qty", nullable = false)
-	private Double qty;
+	private int qty;
 
-	@NotBlank
+	//@NotBlank
 	@Column(name = "product_total_weight", nullable = false)
-	private String productTotalWeight;
+	private Double productTotalWeight;
 
 	@NotBlank
 	@Column(name = "product_transit_status", nullable = false)
@@ -70,6 +72,7 @@ public class Product implements Serializable {
 	@Column(name = "created_tmst", nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreatedDate
+	@JsonIgnore
 	private Date createdOn;
 
 	@NotBlank
@@ -79,22 +82,26 @@ public class Product implements Serializable {
 	@Column(name = "updated_tmst", nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
+	@JsonIgnore
 	private Date updatedOn;
 	
 	@NotBlank
 	@Column(name = "updated_by", nullable = false)
 	private String updatedBy;
 	
-	@ManyToOne
-	@JoinColumn(name="order_id",nullable=false)
-	private Orders order;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "order_id")
+    //@MapsId
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	//@JsonIgnore
+	private Orders orders;
 	
 	public Orders getOrder() {
-		return order;
+		return orders;
 	}
 
 	public void setOrder(Orders order) {
-		this.order = order;
+		this.orders = order;
 	}
 
 	public Long getProductId() {
@@ -121,19 +128,19 @@ public class Product implements Serializable {
 		this.productCategory = productCategory;
 	}
 
-	public Double getQty() {
+	public int getQty() {
 		return qty;
 	}
 
-	public void setQty(Double qty) {
+	public void setQty(int qty) {
 		this.qty = qty;
 	}
 
-	public String getProductTotalWeight() {
+	public Double getProductTotalWeight() {
 		return productTotalWeight;
 	}
 
-	public void setProductTotalWeight(String productTotalWeight) {
+	public void setProductTotalWeight(Double productTotalWeight) {
 		this.productTotalWeight = productTotalWeight;
 	}
 

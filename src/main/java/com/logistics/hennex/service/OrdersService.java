@@ -1,6 +1,7 @@
 package com.logistics.hennex.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -18,12 +19,16 @@ import com.logistics.hennex.enums.OrderIDFormat;
 import com.logistics.hennex.exception.ResourceNotFoundException;
 import com.logistics.hennex.modal.Order;
 import com.logistics.hennex.modal.Orders;
+import com.logistics.hennex.modal.Product;
 import com.logistics.hennex.repository.OrdersRepository;
+import com.logistics.hennex.repository.ProductRepository;
 
 @Service
 public class OrdersService {
 	@Autowired
 	private OrdersRepository ordersRepository;
+	@Autowired
+	private ProductRepository productRepository;
 
 	public List<Orders> getAllOrders() {
 		return ordersRepository.findAll();
@@ -38,6 +43,20 @@ public class OrdersService {
 //		}
 		orders.setOrderID(Long.toString(System.nanoTime()).substring(9));
 		orders.setAddlCharges((orders.getAddlCharges()==null)?Double.valueOf(0):orders.getAddlCharges());
+		Double totalOrderAmt = 0.00;
+//		productRepository.saveAll(orders.getProducts());
+//		List<Product> products = productRepository.findByOrders(orders.getOrderID());
+//		for(Product x:products) {
+		for(Product x:orders.getProducts()) {
+			System.out.println(x.toString());
+			System.out.println(x.getIndvItemAmt());
+			//long indvItemAmt = productRepository.save(x).getIndvItemAmt();
+			//totalOrderAmt = totalOrderAmt+productRepository.save(x).getIndvItemAmt();
+			totalOrderAmt = totalOrderAmt+x.getIndvItemAmt();
+			x.setUpdatedBy(x.getCreatedBy());
+			x.setCreatedOn(orders.getCreatedOn());
+		}
+		orders.setTotalOrderAmt(totalOrderAmt);
 		orders.setFinalAmt(orders.getTotalOrderAmt()+orders.getAddlCharges());
 		orders.setPaidDuringOrder((orders.getPaidDuringOrder()==null)?Double.valueOf(0):orders.getPaidDuringOrder());
 		orders.setBalancePayment(orders.getFinalAmt()-orders.getPaidDuringOrder());
@@ -79,3 +98,4 @@ public class OrdersService {
 		}
 	}
 }
+
