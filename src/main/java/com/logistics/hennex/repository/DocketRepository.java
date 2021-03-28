@@ -1,10 +1,11 @@
 package com.logistics.hennex.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.logistics.hennex.modal.Order;
+import com.logistics.hennex.modal.Docket;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 // CRUD refers Create, Read, Update, Delete
@@ -15,6 +16,6 @@ import com.logistics.hennex.modal.Order;
 //}
 
 @Repository
-public interface OrderRepository extends JpaRepository<Order, String> {
-
+public interface DocketRepository extends JpaRepository<Docket, Long> {
+public List<Docket> findByShipment(String shipmentId);
 }

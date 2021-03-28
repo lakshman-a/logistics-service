@@ -16,47 +16,48 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "sender_hnx")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
 
-public class Customer implements Serializable {
+public class Sender implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "customer_id")
-	private Long customerID;
+	@Column(name = "id")
+	private Long senderID;
 
 	@NotBlank
-	@Column(name = "customer_first_name", nullable = false)
-	private String customerFirstName;
+	@Column(name = "first_name", nullable = false)
+	private String senderFirstName;
 	
-	@Column(name = "customer_middle_name")
-	private String customerMiddleName;
-	
-	@NotBlank
-	@Column(name = "customer_last_name", nullable = false)
-	private String customerLastName;
+	@Column(name = "middle_name")
+	private String senderMiddleName;
 	
 	@NotBlank
-	@Column(name = "phone_number", nullable = false, unique = true)
+	@Column(name = "last_name", nullable = false)
+	private String senderLastName;
+	
+	@NotBlank
+	@Column(name = "firm_name", nullable = false)
+	private String senderFirmName;
+	
+	@NotBlank
+	@Column(name = "phone_no", nullable = false, unique = true)
 	private String phoneNumber;
 	
-	@Column(name = "alt_phone_number", nullable = true )
+	@Column(name = "alt_phone_no", nullable = true )
 	private String altPhonenumber;
 	
 	@NotBlank
 	@Column(name = "email_id", nullable = false, unique = true)
 	private String emailID;
-
-//	@Column(name = "BillingSameAsPickUp")
-//	private char billingSameAsPickUp;
-//	
-//	@Column(name = "BillingSameAsDelivery")
-//	private char billingSameAsDelivery;	
-
+	
 	@NotBlank
-	@Column(name = "preferred_payment_mode", nullable = false)
-	private String preferredPaymentMode;
+	@Column(name = "client_index", nullable = false, unique = true)
+	private String clientIndex;
+	
+	@Column(name = "active_shipments")
+	private String activeShipments;
 	
 	@Column(name = "created_tmst", nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -75,37 +76,45 @@ public class Customer implements Serializable {
 	//@NotBlank
 	@Column(name = "updated_by", nullable = false)
 	private String updatedBy;
-	
-	public Long getCustomerID() {
-		return customerID;
+
+	public Long getSenderID() {
+		return senderID;
 	}
 
-	public void setCustomerID(Long customerID) {
-		this.customerID = customerID;
+	public void setSenderID(Long senderID) {
+		this.senderID = senderID;
 	}
 
-	public String getCustomerFirstName() {
-		return customerFirstName;
+	public String getSenderFirstName() {
+		return senderFirstName;
 	}
 
-	public void setCustomerFirstName(String customerFirstName) {
-		this.customerFirstName = customerFirstName;
+	public void setSenderFirstName(String senderFirstName) {
+		this.senderFirstName = senderFirstName;
 	}
 
-	public String getCustomerMiddleName() {
-		return customerMiddleName;
+	public String getSenderMiddleName() {
+		return senderMiddleName;
 	}
 
-	public void setCustomerMiddleName(String customerMiddleName) {
-		this.customerMiddleName = customerMiddleName;
+	public void setSenderMiddleName(String senderMiddleName) {
+		this.senderMiddleName = senderMiddleName;
 	}
 
-	public String getCustomerLastName() {
-		return customerLastName;
+	public String getSenderLastName() {
+		return senderLastName;
 	}
 
-	public void setCustomerLastName(String customerLastName) {
-		this.customerLastName = customerLastName;
+	public void setSenderLastName(String senderLastName) {
+		this.senderLastName = senderLastName;
+	}
+
+	public String getSenderFirmName() {
+		return senderFirmName;
+	}
+
+	public void setSenderFirmName(String senderFirmName) {
+		this.senderFirmName = senderFirmName;
 	}
 
 	public String getPhoneNumber() {
@@ -132,12 +141,20 @@ public class Customer implements Serializable {
 		this.emailID = emailID;
 	}
 
-	public String getPreferredPaymentMode() {
-		return preferredPaymentMode;
+	public String getClientIndex() {
+		return clientIndex;
 	}
 
-	public void setPreferredPaymentMode(String preferredPaymentMode) {
-		this.preferredPaymentMode = preferredPaymentMode;
+	public void setClientIndex(String clientIndex) {
+		this.clientIndex = clientIndex;
+	}
+
+	public String getActiveShipments() {
+		return activeShipments;
+	}
+
+	public void setActiveShipments(String activeShipments) {
+		this.activeShipments = activeShipments;
 	}
 
 	public Date getCreatedOn() {
@@ -171,8 +188,4 @@ public class Customer implements Serializable {
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-
-
-
-
-}
+	}

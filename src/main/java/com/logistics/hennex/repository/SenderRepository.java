@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.logistics.hennex.modal.Customer;
+import com.logistics.hennex.modal.Sender;
 
 // This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
 // CRUD refers Create, Read, Update, Delete
@@ -15,6 +15,6 @@ import com.logistics.hennex.modal.Customer;
 //}
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Long> {
+public interface SenderRepository extends JpaRepository<Sender, Long> {
 
 }

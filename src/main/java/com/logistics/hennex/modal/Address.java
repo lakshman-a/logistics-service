@@ -18,14 +18,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "address")
+@Table(name = "address_hnx")
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = { "createdAt", "updatedAt" }, allowGetters = true)
 
 public class Address implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "address_id")
+	@Column(name = "id")
 	private Long addressId;
 
 	@NotBlank
@@ -33,8 +33,8 @@ public class Address implements Serializable {
 	private String addressLine;
 	
 	@NotBlank
-	@Column(name = "region", nullable = false)
-	private String region;
+	@Column(name = "addl_line")
+	private String addlLine;
 
 	@NotBlank
 	@Column(name = "city", nullable = false)
@@ -44,10 +44,6 @@ public class Address implements Serializable {
 	@Column(name = "district", nullable = false)
 	private String district;
 
-	@NotNull
-	@Column(name = "pincode", nullable = false)
-	private Long pincode;
-	
 	@NotBlank
 	@Column(name = "state", nullable = false)
 	private String state;
@@ -55,6 +51,11 @@ public class Address implements Serializable {
 	@NotBlank
 	@Column(name = "country", nullable = false)
 	private String country;
+	
+	@NotNull
+	@Column(name = "pincode", nullable = false)
+	private Long pincode;
+
 
 	@Column(name = "created_tmst", nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -90,12 +91,12 @@ public class Address implements Serializable {
 		this.addressLine = addressLine;
 	}
 
-	public String getRegion() {
-		return region;
+	public String getAddlLine() {
+		return addlLine;
 	}
 
-	public void setRegion(String region) {
-		this.region = region;
+	public void setAddlLine(String addlLine) {
+		this.addlLine = addlLine;
 	}
 
 	public String getCity() {
