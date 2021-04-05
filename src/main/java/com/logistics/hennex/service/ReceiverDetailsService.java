@@ -19,8 +19,9 @@ public class ReceiverDetailsService {
 		return receiverRepository.findAll();
 	}
 
-	public Receiver createReceiver(Receiver receiver) {
+	public Receiver createReceiver(long addressId, Receiver receiver) {
 		receiver.setUpdatedBy(receiver.getCreatedBy());
+		receiver.setAddressId(addressId);
 		return receiverRepository.save(receiver);
 	}
 
@@ -37,15 +38,15 @@ public class ReceiverDetailsService {
 		Receiver updatedReceiver = receiverRepository.save(receiver);
 		return updatedReceiver;
 	}
-	
-	public boolean updateAddressForRecipient(Long receiverID,long addressId) {
-//		return receiverRepository.save(customer);
-		Receiver receiver = receiverRepository.findById(receiverID)
-				.orElseThrow(() -> new ResourceNotFoundException("Receiver", "id", receiverID));
-		receiver.setAddressId(addressId);
-		receiverRepository.save(receiver);
-		return true;
-	}
+//	
+//	public boolean updateAddressForRecipient(Long receiverID,long addressId) {
+////		return receiverRepository.save(customer);
+//		Receiver receiver = receiverRepository.findById(receiverID)
+//				.orElseThrow(() -> new ResourceNotFoundException("Receiver", "id", receiverID));
+//		receiver.setAddressId(addressId);
+//		receiverRepository.save(receiver);
+//		return true;
+//	}
 
 	public boolean deleteReceiver(Long receiverID) {
 //		Customer customer = receiverRepository.findById(customerID)

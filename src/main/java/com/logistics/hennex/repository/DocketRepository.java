@@ -17,5 +17,5 @@ import com.logistics.hennex.modal.Docket;
 
 @Repository
 public interface DocketRepository extends JpaRepository<Docket, Long> {
-public List<Docket> findByShipment(String shipmentId);
+public List<Docket> findByShipmentId(String shipmentId);
 }

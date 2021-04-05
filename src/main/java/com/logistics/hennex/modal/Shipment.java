@@ -66,11 +66,20 @@ public class Shipment implements Serializable {
 	@Column(name = "shipment_status", nullable = false)
 	private String shipmentStatus;
 	
-	@Column(name = "docket_ids", nullable = false)
+	@Column(name = "docket_ids")
 	private String docketIDs;
 	
 	@Column(name = "sender_id", nullable = false)
 	private long senderID;
+	
+	@Column(name = "pk_up_addr_id", nullable = false)
+	private long pkUpAddrId;
+	
+	@Column(name = "receiver_id", nullable = false)
+	private long receiverId;
+	
+	@Column(name = "del_addr_id", nullable = false)
+	private long delAddrId;
 	
 	@Column(name = "created_tmst", nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -250,6 +259,30 @@ public class Shipment implements Serializable {
 
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+	public long getPkUpAddrId() {
+		return pkUpAddrId;
+	}
+
+	public void setPkUpAddrId(long pkUpAddrId) {
+		this.pkUpAddrId = pkUpAddrId;
+	}
+
+	public long getReceiverId() {
+		return receiverId;
+	}
+
+	public void setReceiverId(long receiverId) {
+		this.receiverId = receiverId;
+	}
+
+	public long getDelAddrId() {
+		return delAddrId;
+	}
+
+	public void setDelAddrId(long delAddrId) {
+		this.delAddrId = delAddrId;
 	}
 
 }

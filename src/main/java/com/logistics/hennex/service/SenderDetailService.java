@@ -31,18 +31,20 @@ public class SenderDetailService {
 
 	public Sender updateSender(Long senderID, Sender sender) {
 //		return senderRepository.save(customer);
-		senderRepository.findById(senderID)
-				.orElseThrow(() -> new ResourceNotFoundException("Sender", "id", senderID));
+		senderRepository.findById(senderID).orElseThrow(() -> new ResourceNotFoundException("Sender", "id", senderID));
 		sender.setSenderID(senderID);
 		Sender updatedSender = senderRepository.save(sender);
 		return updatedSender;
 	}
-	
-	public boolean updateShipmentForSender(Long senderID, String[] shipmentIds) {
+
+	public boolean updateShipmentForSender(Long senderID, String shipmentId) {
 //		return senderRepository.save(customer);
 		Sender sender = senderRepository.findById(senderID)
 				.orElseThrow(() -> new ResourceNotFoundException("Sender", "id", senderID));
-		sender.setActiveShipments(String.join(",", shipmentIds));
+		// sender.setActiveShipments(String.join(",", shipmentIds));
+		sender.setActiveShipments((sender.getActiveShipments().equalsIgnoreCase("null")
+				|| sender.getActiveShipments() == null || sender.getActiveShipments().isEmpty()) ? shipmentId
+						: sender.getActiveShipments() + "," + shipmentId);
 		senderRepository.save(sender);
 		return true;
 	}
@@ -59,7 +61,7 @@ public class SenderDetailService {
 			return false;
 		}
 	}
-	
+
 //	public static void main(String[] args) {
 //		String[] test = {"test1","test2","test3"};
 //		System.out.println(String.join(",", test));

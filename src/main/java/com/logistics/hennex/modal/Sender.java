@@ -145,8 +145,8 @@ public class Sender implements Serializable {
 		return clientIndex;
 	}
 
-	public void setClientIndex(String clientIndex) {
-		this.clientIndex = clientIndex;
+	public void setClientIndex() {
+		this.clientIndex = this.senderFirstName.toString()+this.senderFirmName.toString();
 	}
 
 	public String getActiveShipments() {

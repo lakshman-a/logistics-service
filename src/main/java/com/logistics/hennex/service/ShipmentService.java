@@ -8,12 +8,16 @@ import org.springframework.stereotype.Service;
 import com.logistics.hennex.exception.ResourceNotFoundException;
 import com.logistics.hennex.modal.Sender;
 import com.logistics.hennex.modal.Shipment;
+import com.logistics.hennex.modal.Docket;
+import com.logistics.hennex.repository.DocketRepository;
 import com.logistics.hennex.repository.ShipmentRepository;
 
 @Service
 public class ShipmentService {
 	@Autowired
 	private ShipmentRepository shipmentRepository;
+	@Autowired
+	private DocketRepository docketRepository;
 
 	public List<Shipment> getAllShipment() {
 		return shipmentRepository.findAll();
@@ -36,17 +40,27 @@ public class ShipmentService {
 		Shipment updatedShipment = shipmentRepository.save(shipment);
 		return updatedShipment;
 	}
-	
-	
-	public boolean updateDocketsForShipment(String shipmentId, String[] docketIds) {
+
+	public boolean updateDocketsForShipment(String shipmentId, long docketId, long qty) {
 //		return senderRepository.save(customer);
 		Shipment shipment = shipmentRepository.findById(shipmentId)
-				.orElseThrow(() -> new ResourceNotFoundException("Sender", "id", shipmentId));
-		shipment.setDocketIDs(String.join(",", docketIds));
+				.orElseThrow(() -> new ResourceNotFoundException("Shipment", "id", shipmentId));
+		// shipment.setDocketIDs(String.join(",", docketIds));
+		String docketIds = String.valueOf(docketId);
+		if (qty > 1) {
+			for (long i = 0; i < qty - 1; i++) {
+				Docket tmpDocket = docketRepository.findById(docketId)
+						.orElseThrow(() -> new ResourceNotFoundException("Docket", "id", docketId));
+				tmpDocket.setDocketId(null);
+				long dockerid = docketRepository.save(tmpDocket).getDocketId();
+				docketIds = docketIds + "," + String.valueOf(dockerid);
+			}
+		}
+		shipment.setDocketIDs(docketIds);
 		shipmentRepository.save(shipment);
 		return true;
 	}
-	
+
 	public boolean deleteShipment(String shipmentID) {
 //		Shipment shipment = shipmentRepository.findById(shipmentID)
 //				.orElseThrow(() -> new ResourceNotFoundException("Shipment", "id", shipmentID));

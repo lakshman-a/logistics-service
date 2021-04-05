@@ -32,7 +32,6 @@ public class Address implements Serializable {
 	@Column(name = "address_line", nullable = false)
 	private String addressLine;
 	
-	@NotBlank
 	@Column(name = "addl_line")
 	private String addlLine;
 
@@ -55,6 +54,10 @@ public class Address implements Serializable {
 	@NotNull
 	@Column(name = "pincode", nullable = false)
 	private Long pincode;
+	
+	@NotNull
+	@Column(name = "sender_id", nullable = false)
+	private Long senderId;
 
 
 	@Column(name = "created_tmst", nullable = false, updatable = false)
@@ -169,6 +172,14 @@ public class Address implements Serializable {
 
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
+	}
+
+	public Long getSenderId() {
+		return senderId;
+	}
+
+	public void setSenderId(Long senderId) {
+		this.senderId = senderId;
 	}
 
 	

@@ -27,8 +27,9 @@ public class AddressService {
 		return addressRepository.findAll();
 	}
 
-	public Address createAddress(Address address) {
+	public Address createAddress(long senderId,Address address) {
 		address.setUpdatedBy(address.getCreatedBy());
+		address.setSenderId(senderId);
 		return addressRepository.save(address);
 	}
 
