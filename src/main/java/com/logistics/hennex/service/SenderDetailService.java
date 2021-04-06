@@ -20,6 +20,7 @@ public class SenderDetailService {
 	}
 
 	public Sender createSender(Sender sender) {
+		sender.setClientIndex(sender.getSenderFirstName().toString()+sender.getSenderFirmName().toString());
 		sender.setUpdatedBy(sender.getCreatedBy());
 		return senderRepository.save(sender);
 	}
@@ -31,8 +32,11 @@ public class SenderDetailService {
 
 	public Sender updateSender(Long senderID, Sender sender) {
 //		return senderRepository.save(customer);
-		senderRepository.findById(senderID).orElseThrow(() -> new ResourceNotFoundException("Sender", "id", senderID));
+		Sender tmpSender = senderRepository.findById(senderID).orElseThrow(() -> new ResourceNotFoundException("Sender", "id", senderID));
 		sender.setSenderID(senderID);
+		sender.setClientIndex(tmpSender.getClientIndex());
+		sender.setCreatedBy(tmpSender.getCreatedBy());
+		sender.setCreatedOn(tmpSender.getCreatedOn());
 		Sender updatedSender = senderRepository.save(sender);
 		return updatedSender;
 	}

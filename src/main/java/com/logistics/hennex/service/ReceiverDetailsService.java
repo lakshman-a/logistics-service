@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.logistics.hennex.exception.ResourceNotFoundException;
 import com.logistics.hennex.modal.Receiver;
+import com.logistics.hennex.modal.Sender;
 import com.logistics.hennex.repository.ReceiverRepository;
 
 @Service
@@ -32,9 +33,12 @@ public class ReceiverDetailsService {
 
 	public Receiver updateReceiver(Long receiverID, Receiver receiver) {
 //		return receiverRepository.save(customer);
-		receiverRepository.findById(receiverID)
+
+		Receiver tmpReceiver = receiverRepository.findById(receiverID)
 				.orElseThrow(() -> new ResourceNotFoundException("Receiver", "id", receiverID));
 		receiver.setReceiverID(receiverID);
+		receiver.setCreatedBy(tmpReceiver.getCreatedBy());
+		receiver.setCreatedOn(tmpReceiver.getCreatedOn());
 		Receiver updatedReceiver = receiverRepository.save(receiver);
 		return updatedReceiver;
 	}

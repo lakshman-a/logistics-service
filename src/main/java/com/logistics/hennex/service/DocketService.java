@@ -27,7 +27,13 @@ public class DocketService {
 		return docketRepository.findAll();
 	}
 
-	public Docket createDocket(Docket docket) {
+	public Docket createDocket(String shipmentId,Docket docket) {
+		float volume = 0;
+		if (docket.getHeight() > 0 && docket.getLength() > 0 && docket.getBreadth() > 0) {
+			volume = docket.getHeight()*docket.getLength()*docket.getBreadth();
+		}
+		docket.setShipmentId(shipmentId);
+		docket.setVolume(volume);
 		docket.setUpdatedBy(docket.getCreatedBy());
 		return docketRepository.save(docket);
 	}
@@ -38,9 +44,11 @@ public class DocketService {
 	}
 
 	public Docket updateDocket(Long docketId, Docket docket) {
-		docketRepository.findById(docketId)
+		Docket tmpDocker = docketRepository.findById(docketId)
 				.orElseThrow(() -> new ResourceNotFoundException("Docket", "id", docketId));
 		docket.setDocketId(docketId);
+		docket.setCreatedBy(tmpDocker.getCreatedBy());
+		docket.setCreatedOn(tmpDocker.getCreatedOn());
 		Docket updatedDocket = docketRepository.save(docket);
 		return updatedDocket;
 	}

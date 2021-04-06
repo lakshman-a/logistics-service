@@ -52,7 +52,6 @@ public class Sender implements Serializable {
 	@Column(name = "email_id", nullable = false, unique = true)
 	private String emailID;
 	
-	@NotBlank
 	@Column(name = "client_index", nullable = false, unique = true)
 	private String clientIndex;
 	
@@ -145,8 +144,8 @@ public class Sender implements Serializable {
 		return clientIndex;
 	}
 
-	public void setClientIndex() {
-		this.clientIndex = this.senderFirstName.toString()+this.senderFirmName.toString();
+	public void setClientIndex(String clientIndex) {
+		this.clientIndex = clientIndex;
 	}
 
 	public String getActiveShipments() {

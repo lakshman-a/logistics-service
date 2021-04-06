@@ -35,10 +35,19 @@ public class AddressController {
 
 	// Create a new Address
 	@PostMapping("/address")
-	public Address createAddress(@Valid @RequestBody Address address,@RequestParam(name = "sender") String senderId) {
-		return addressService.createAddress(Long.valueOf(senderId),address);
+	public Address createAddress(@Valid @RequestBody Address address,@RequestParam(name = "sender",required=false) String senderId) {
+		if(senderId!=null && senderId.length()>0) {
+			return addressService.createAddress(Long.valueOf(senderId),address);
+		}else {
+			return addressService.createAddress(address);
+		}
 	}
-
+	
+//	@PostMapping("/address")
+//	public Address createAddress(@Valid @RequestBody Address address) {
+//		return addressService.createAddress(address);
+//	}
+	
 	// Get a Single Address
 	@GetMapping("/address/{id}")
 	public Address getAddressById(@PathVariable(value = "id") Long addressId) {
@@ -48,8 +57,12 @@ public class AddressController {
 
 	// Update a Address
 	@PutMapping("/address/{id}")
-	public Address updateAddress(@PathVariable(value = "id") Long addressId, @Valid @RequestBody Address AddressDetails) {
-		return addressService.updateAddress(addressId,AddressDetails);
+	public Address updateAddress(@PathVariable(value = "id") Long addressId, @Valid @RequestBody Address AddressDetails,@RequestParam(name = "sender",required=false) String senderId) {
+		if(senderId!=null && senderId.length()>0) {
+			return addressService.createAddress(Long.valueOf(addressId),AddressDetails);
+		}else {
+			return addressService.createAddress(AddressDetails);
+		}
 	}
 
 	// Delete a Address

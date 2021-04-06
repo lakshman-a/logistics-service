@@ -130,13 +130,9 @@ public class Docket implements Serializable {
 	public float getVolume() {
 		return volume;
 	}
-
-	public void setVolume() {
-		if (this.height > 0 && this.length > 0 && this.breadth > 0) {
-			this.volume = this.length*this.breadth*this.height;
-		} else {
-			this.volume = 0;
-		}
+	
+	public void setVolume(float volume) {
+		this.volume = volume;
 	}
 
 	public float getWeight() {
@@ -234,4 +230,6 @@ public class Docket implements Serializable {
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
+
 }

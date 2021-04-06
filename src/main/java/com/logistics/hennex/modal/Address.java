@@ -55,8 +55,7 @@ public class Address implements Serializable {
 	@Column(name = "pincode", nullable = false)
 	private Long pincode;
 	
-	@NotNull
-	@Column(name = "sender_id", nullable = false)
+	@Column(name = "sender_id")
 	private Long senderId;
 
 

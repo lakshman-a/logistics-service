@@ -52,7 +52,7 @@ public class Receiver implements Serializable {
 	@Column(name = "email_id", nullable = false, unique = true)
 	private String emailID;
 
-	@Column(name = "address_id", nullable = false)
+	@Column(name = "address_id")
 	private long addressId;
 	
 	@Column(name = "created_tmst", nullable = false, updatable = false)

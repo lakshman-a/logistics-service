@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.logistics.hennex.exception.ResourceNotFoundException;
 import com.logistics.hennex.modal.Address;
+import com.logistics.hennex.modal.Sender;
 import com.logistics.hennex.repository.AddressRepository;
 
 @Service
@@ -32,6 +33,11 @@ public class AddressService {
 		address.setSenderId(senderId);
 		return addressRepository.save(address);
 	}
+	
+	public Address createAddress(Address address) {
+		address.setUpdatedBy(address.getCreatedBy());
+		return addressRepository.save(address);
+	}
 
 	public Address getAddressById(Long addressID) {
 		return addressRepository.findById(addressID)
@@ -39,9 +45,12 @@ public class AddressService {
 	}
 
 	public Address updateAddress(Long addressId, Address address) {
-		addressRepository.findById(addressId)
+
+		Address tmpAddress = addressRepository.findById(addressId)
 				.orElseThrow(() -> new ResourceNotFoundException("Address", "id", addressId));
 		address.setAddressId(addressId);
+		address.setCreatedBy(tmpAddress.getCreatedBy());
+		address.setCreatedOn(tmpAddress.getCreatedOn());
 		Address updatedAddress = addressRepository.save(address);
 		return updatedAddress;
 	}

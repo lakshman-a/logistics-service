@@ -26,11 +26,11 @@ import java.util.Date;
 
 public class Shipment implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private String shipmentId;
 
-	@Column(name = "shipment_desc")
+	@Column(name = "shipment_desc") 
 	private String shipmentDesc;
 	@NotBlank	
 	@Column(name = "invoice_no", nullable = false)
@@ -57,7 +57,7 @@ public class Shipment implements Serializable {
 	@Column(name = "docket_qty", nullable = false)
 	private long docketQty;
 	
-	@Column(name = "total_weight", nullable = false)
+	@Column(name = "total_weight")
 	private float totalWeight;
 	
 	@Column(name = "total_volume")
@@ -66,19 +66,16 @@ public class Shipment implements Serializable {
 	@Column(name = "shipment_status", nullable = false)
 	private String shipmentStatus;
 	
-	@Column(name = "docket_ids")
-	private String docketIDs;
-	
-	@Column(name = "sender_id", nullable = false)
+	@Column(name = "sender_id")
 	private long senderID;
 	
-	@Column(name = "pk_up_addr_id", nullable = false)
+	@Column(name = "pk_up_addr_id")
 	private long pkUpAddrId;
 	
-	@Column(name = "receiver_id", nullable = false)
+	@Column(name = "receiver_id")
 	private long receiverId;
 	
-	@Column(name = "del_addr_id", nullable = false)
+	@Column(name = "del_addr_id")
 	private long delAddrId;
 	
 	@Column(name = "created_tmst", nullable = false, updatable = false)
@@ -211,14 +208,6 @@ public class Shipment implements Serializable {
 
 	public void setShipmentStatus(String shipmentStatus) {
 		this.shipmentStatus = shipmentStatus;
-	}
-
-	public String getDocketIDs() {
-		return docketIDs;
-	}
-
-	public void setDocketIDs(String docketIDs) {
-		this.docketIDs = docketIDs;
 	}
 
 	public long getSenderID() {

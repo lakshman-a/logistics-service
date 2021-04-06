@@ -1,6 +1,7 @@
 package com.logistics.hennex.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,13 @@ public class ShipmentService {
 		return shipmentRepository.findAll();
 	}
 
-	public Shipment createShipment(Shipment shipment) {
+	public Shipment createShipment(Map<String,String> allParams,Shipment shipment) {
+		shipment.setShipmentId(Long.toString(System.nanoTime()).substring(9));
 		shipment.setUpdatedBy(shipment.getCreatedBy());
+		shipment.setSenderID(Long.valueOf(allParams.get("sender")));
+		shipment.setPkUpAddrId(Long.valueOf(allParams.get("pkupaddr")));
+		shipment.setReceiverId(Long.valueOf(allParams.get("receiver")));
+		shipment.setDelAddrId(Long.valueOf(allParams.get("deladdr")));
 		return shipmentRepository.save(shipment);
 	}
 
@@ -34,29 +40,37 @@ public class ShipmentService {
 	}
 
 	public Shipment updateShipment(String shipmentId, Shipment shipment) {
-		shipmentRepository.findById(shipmentId)
+		Shipment tmpShipment = shipmentRepository.findById(shipmentId)
 				.orElseThrow(() -> new ResourceNotFoundException("Shipment", "id", shipmentId));
 		shipment.setShipmentId(shipmentId);
+		shipment.setCreatedBy(tmpShipment.getCreatedBy());
+		shipment.setCreatedOn(tmpShipment.getCreatedOn());
 		Shipment updatedShipment = shipmentRepository.save(shipment);
 		return updatedShipment;
 	}
 
-	public boolean updateDocketsForShipment(String shipmentId, long docketId, long qty) {
+	public boolean updateWtVolForShipment(String shipmentId) {
 //		return senderRepository.save(customer);
 		Shipment shipment = shipmentRepository.findById(shipmentId)
 				.orElseThrow(() -> new ResourceNotFoundException("Shipment", "id", shipmentId));
 		// shipment.setDocketIDs(String.join(",", docketIds));
-		String docketIds = String.valueOf(docketId);
-		if (qty > 1) {
-			for (long i = 0; i < qty - 1; i++) {
-				Docket tmpDocket = docketRepository.findById(docketId)
-						.orElseThrow(() -> new ResourceNotFoundException("Docket", "id", docketId));
-				tmpDocket.setDocketId(null);
-				long dockerid = docketRepository.save(tmpDocket).getDocketId();
-				docketIds = docketIds + "," + String.valueOf(dockerid);
-			}
+		float totalWeight = 0;
+		float totalVolume = 0;
+		List<Docket> docketsList = docketRepository.findByShipmentId(shipmentId);
+		for(Docket x:docketsList) {
+			totalWeight = totalWeight + x.getWeight();
+			totalVolume = totalVolume + x.getVolume();
 		}
-		shipment.setDocketIDs(docketIds);
+//			for (long i = 0; i < qty - 1; i++) {
+//				Docket tmpDocket = docketRepository.findById(docketId)
+//						.orElseThrow(() -> new ResourceNotFoundException("Docket", "id", docketId));
+//				tmpDocket.setDocketId(null);
+//				long dockerid = docketRepository.save(tmpDocket).getDocketId();
+//				docketIds = docketIds + "," + String.valueOf(dockerid);
+//			}
+//		}
+		shipment.setTotalWeight(totalWeight);
+		shipment.setTotalVolume(totalVolume);
 		shipmentRepository.save(shipment);
 		return true;
 	}

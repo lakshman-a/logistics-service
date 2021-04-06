@@ -35,7 +35,7 @@ public class ReceiverController {
 
 	// Create a new Address
 	@PostMapping("/receiver")
-	public Receiver createAddress(@Valid @RequestBody Receiver receiver,@RequestParam(name = "delAddr") String addressId) {
+	public Receiver createAddress(@Valid @RequestBody Receiver receiver,@RequestParam(name = "delAddr",required=true) String addressId) {
 		return receiverService.createReceiver(Long.valueOf(addressId),receiver);
 	}
 
