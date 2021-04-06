@@ -12,6 +12,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -27,7 +29,7 @@ public class Docket implements Serializable {
 	private Long docketId;
 
 	@Column(name = "docket_desc")
-	private float docketDesc;
+	private String docketDesc;
 
 	@Column(name = "length")
 	private float length;
@@ -41,7 +43,7 @@ public class Docket implements Serializable {
 	@Column(name = "volume")
 	private float volume;
 
-	@NotBlank
+	@NotNull
 	@Column(name = "weight", nullable = false)
 	private float weight;
 
@@ -95,11 +97,11 @@ public class Docket implements Serializable {
 		this.docketId = docketId;
 	}
 
-	public float getDocketDesc() {
+	public String getDocketDesc() {
 		return docketDesc;
 	}
 
-	public void setDocketDesc(float docketDesc) {
+	public void setDocketDesc(String docketDesc) {
 		this.docketDesc = docketDesc;
 	}
 

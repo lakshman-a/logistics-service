@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.logistics.hennex.modal.Docket;
 import com.logistics.hennex.service.DocketService;
+import com.logistics.hennex.service.ShipmentService;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -26,6 +27,8 @@ import com.logistics.hennex.service.DocketService;
 public class DocketController {
 	@Autowired
 	private DocketService docketService;
+	@Autowired
+	private ShipmentService shipmentService;
 
 	// Get All Dockets
 	@GetMapping("/docket")
@@ -43,19 +46,25 @@ public class DocketController {
 	// Create a new Docket
 	@PostMapping("/docket")
 	public Docket createDocket(@Valid @RequestBody Docket docket,@RequestParam(name="shipment")String shipmentId) {
-		return docketService.createDocket(shipmentId,docket);
+		Docket tmpDocket =docketService.createDocket(shipmentId,docket);
+		shipmentService.updateWtVolForShipment(shipmentId);
+		return tmpDocket;
 	}
 
 	// Update a Docket
 	@PutMapping("/docket/{id}")
 	public Docket updateDocket(@PathVariable(value = "id") Long docketId, @Valid @RequestBody Docket DocketDetails) {
-		return docketService.updateDocket(docketId,DocketDetails);
+		Docket tmpDocket = docketService.updateDocket(docketId,DocketDetails);
+		shipmentService.updateWtVolForShipment(DocketDetails.getShipmentId());
+		return tmpDocket;
 	}
 
 	// Delete a Docket
 	@DeleteMapping("/docket/{id}")
 	public ResponseEntity<?> deleteDocket(@PathVariable(value = "id") Long docketId) {
-		if(docketService.deleteDocket(docketId)){
+		String shipmentID = docketService.getDocketById(docketId).getShipmentId();
+		if(docketService.deleteDocket(docketId)){		
+			shipmentService.updateWtVolForShipment(shipmentID);
 			return ResponseEntity.noContent().build();
 		}else {
 			return ResponseEntity.badRequest().build();

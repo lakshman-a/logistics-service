@@ -54,10 +54,6 @@ public class DocketService {
 	}
 
 	public boolean deleteDocket(Long docketID) {
-//		Docket docket = docketRepository.findById(docketID)
-//				.orElseThrow(() -> new ResourceNotFoundException("Docket", "id", docketID));
-
-//		docketRepository.delete(docket);
 		if (docketRepository.findById(docketID).isPresent()) {
 			docketRepository.deleteById(docketID);
 			return true;

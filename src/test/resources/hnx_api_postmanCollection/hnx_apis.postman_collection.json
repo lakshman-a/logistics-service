@@ -1,0 +1,477 @@
+{
+	"variables": [],
+	"info": {
+		"name": "hnx_apis",
+		"_postman_id": "466bcea2-289e-f6dd-bcd0-48892b418b48",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sender",
+			"description": "",
+			"item": [
+				{
+					"name": "POST Sender",
+					"request": {
+						"url": "localhost:5000/api/sender",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"senderFirstName\":\"John\",\n\"senderMiddleName\":\"T\",\n\"senderLastName\":\"Kirk\",\n\"senderFirmName\":\"USS Enterprise\", \n\"phoneNumber\":\"+919876543210\",\n\"altPhonenumber\":\"09087654321\", \n\"emailID\":\"jtkirk@enterpprise.com\",\n\"createdBy\":\"ADMIN\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Sender",
+					"request": {
+						"url": "localhost:5000/api/sender/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"senderFirstName\": \"John\",\n    \"senderMiddleName\": \"K\",\n    \"senderLastName\": \"Kirk\",\n    \"senderFirmName\": \"USS Enterprise\",\n    \"phoneNumber\": \"+919876543210\",\n    \"altPhonenumber\": \"09087654321\",\n    \"emailID\": \"jtkirk@enterpprise.com\",\n    \"clientIndex\": \"JohnUSS Enterprise\",\n    \"activeShipments\": null,\n    \"updatedBy\": \"ADMIN2\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET Senders",
+					"request": {
+						"url": "localhost:5000/api/sender",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET Sender",
+					"request": {
+						"url": "localhost:5000/api/sender/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Address",
+			"description": "",
+			"item": [
+				{
+					"name": "GET Addresses",
+					"request": {
+						"url": "localhost:5000/api/address",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET Address",
+					"request": {
+						"url": "localhost:5000/api/address/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "POST Address",
+					"request": {
+						"url": {
+							"raw": "localhost:5000/api/address",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"address"
+							],
+							"query": [
+								{
+									"key": "sender",
+									"value": "1",
+									"equals": true,
+									"description": "",
+									"disabled": true
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"addlLine\" : null,\n\"addressLine\" : \"String2\",\n\"city\" : \"chennai\",\n\"country\" : \"India\",\n\"createdBy\" : \"ADMIN\",\n\"district\" : \"chennai\",\n\"pincode\" : 600117,\n\"state\" : \"Tamilnadu\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Address",
+					"request": {
+						"url": {
+							"raw": "localhost:5000/api/address/2?sender=1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"address",
+								"2"
+							],
+							"query": [
+								{
+									"key": "sender",
+									"value": "1",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"addlLine\" : null,\n\"addressLine\" : \"Address line1\",\n\"city\" : \"chennai\",\n\"country\" : \"India\",\n\"createdBy\" : \"ADMIN\",\n\"district\" : \"chennai\",\n\"pincode\" : 600117,\n\"state\" : \"Tamilnadu\",\n\"updatedBy\":\"ADMIN2\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Receiver",
+			"description": "",
+			"item": [
+				{
+					"name": "GET Receiver",
+					"request": {
+						"url": "localhost:5000/api/receiver/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET Receivers",
+					"request": {
+						"url": "localhost:5000/api/receiver",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "POST Receiver",
+					"request": {
+						"url": {
+							"raw": "localhost:5000/api/receiver?delAddr=1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"receiver"
+							],
+							"query": [
+								{
+									"key": "delAddr",
+									"value": "1",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"altPhonenumber\": \"9600140278\",\n\"createdBy\" : \"ADMIN\",\n\"emailID\" : \"Spock@enterprise.com\",\n\"phoneNumber\" : \"+919566278475\",\n\"receiverFirmName\" : \"USS Enterprise\",\n\"receiverFirstName\" : \"Spock\",\n\"receiverLastName\" : \"Vulkan\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Receiver",
+					"request": {
+						"url": "localhost:5000/api/receiver/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"receiverFirstName\": \"Spock\",\n    \"receiverMiddleName\": null,\n    \"receiverLastName\": \"Vulcan\",\n    \"receiverFirmName\": \"USS Enterprise\",\n    \"phoneNumber\": \"+919566278475\",\n    \"altPhonenumber\": \"9600140278\",\n    \"emailID\": \"Spock@enterprise.com\",\n    \"addressId\": 1,\n    \"updatedBy\": \"ADMIN2\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Shipment",
+			"description": "",
+			"item": [
+				{
+					"name": "GET Shipment",
+					"request": {
+						"url": "localhost:5000/api/shipment/HNXA08952",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET Shipments",
+					"request": {
+						"url": "localhost:5000/api/shipment",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "POST Shipment",
+					"request": {
+						"url": {
+							"raw": "localhost:5000/api/shipment?sender=1&pkupaddr=2&receiver=1&deladdr=1",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"shipment"
+							],
+							"query": [
+								{
+									"key": "sender",
+									"value": "1",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "pkupaddr",
+									"value": "2",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "receiver",
+									"value": "1",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "deladdr",
+									"value": "1",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"awbNo\":null,\n\"createdBy\":\"ADMIN\",\n\"docketQty\":10,\n\"invoiceAmt\":55.97,\n\"invoiceDate\":\"DateString\",\n\"invoiceNo\":\"AXCDJE97899\",\n\"materialType\":\"Electronics\",\n\"packageType\":\"BobbleWrap\",\n\"shipmentDesc\":\"1st Shipment\",\n\"shipmentStatus\":\"Initiated\",\n\"splInstrxn\":null\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Shipment",
+					"request": {
+						"url": "localhost:5000/api/shipment/HNXA08952",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"shipmentId\": \"HNXA08952\",\n    \"shipmentDesc\": \"1st Shipment\",\n    \"invoiceNo\": \"AXCDJE97899\",\n    \"invoiceAmt\": 55.97,\n    \"invoiceDate\": \"DateString\",\n    \"packageType\": \"BobbleWrap\",\n    \"materialType\": \"Electronics\",\n    \"awbNo\": \"AWBNochars\",\n    \"splInstrxn\": null,\n    \"docketQty\": 10,\n    \"totalWeight\": 0,\n    \"totalVolume\": 0,\n    \"shipmentStatus\": \"Initiated\",\n    \"senderID\": 1,\n    \"pkUpAddrId\": 2,\n    \"receiverId\": 1,\n    \"delAddrId\": 1,\n    \"updatedBy\": \"ADMIN2\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Docket",
+			"description": "",
+			"item": [
+				{
+					"name": "GET Docket",
+					"request": {
+						"url": "localhost:5000/api/docket/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE Docket",
+					"request": {
+						"url": "localhost:5000/api/docket/4",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "GET Dockets",
+					"request": {
+						"url": "localhost:5000/api/docket",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "POST Docket",
+					"request": {
+						"url": {
+							"raw": "localhost:5000/api/docket?shipment=HNXA08952",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"docket"
+							],
+							"query": [
+								{
+									"key": "shipment",
+									"value": "HNXA08952",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"actionNotes\":\"TestNotes\",\n\"breadth\":10.00,\n\"createdBy\":\"ADMIN\",\n\"docketDesc\":\"testDocket\",\n\"docketNo\":\"docketno3\",\n\"height\":5.00,\n\"length\":5.00,\n\"weight\": 50.01,\n\"location\":\"Warehouse\",\n\"pkgStatus\":\"Pristine\",\n\"transitMode\":\"Surface\",\n\"transitStatus\":\"Initiated\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "PUT Docket",
+					"request": {
+						"url": "localhost:5000/api/docket/3",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"docketDesc\": \"testDocket\",\n    \"length\": 5,\n    \"breadth\": 10,\n    \"height\": 5,\n    \"volume\": 250,\n    \"weight\": 50.10,\n    \"docketNo\": \"docketno3\",\n    \"transitStatus\": \"Initiated\",\n    \"location\": \"Warehouse\",\n    \"transitMode\": \"Surface\",\n    \"pkgStatus\": \"Pristine\",\n    \"actionNotes\": \"TestNotes\",\n    \"shipmentId\": \"HNXA08952\",\n    \"updatedBy\": \"ADMIN2\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
