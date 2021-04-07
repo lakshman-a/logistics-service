@@ -18,6 +18,8 @@ import javax.validation.constraints.NotNull;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "shipment_hnx")
@@ -95,7 +97,7 @@ public class Shipment implements Serializable {
 	// @NotBlank
 	@Column(name = "updated_by", nullable = false)
 	private String updatedBy;
-
+	
 	public String getShipmentId() {
 		return shipmentId;
 	}

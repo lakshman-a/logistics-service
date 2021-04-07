@@ -1,5 +1,7 @@
 package com.logistics.hennex.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +25,26 @@ public class ShipmentService {
 	public List<Shipment> getAllShipment() {
 		return shipmentRepository.findAll();
 	}
+	
+	public List<Shipment> getAllShipmentByShipmentStatus(String status) {
+		List<String> shipmentStatusList = Arrays.asList("Initiated","Confirmed","In Transit","Out for Delivery","Delivered");
+		if(status.equalsIgnoreCase("active")) {
+			shipmentStatusList = Arrays.asList("Initiated","Confirmed","In Transit","Out for Delivery");
+		}
+		List<Shipment> shipments = new ArrayList<Shipment>();
+		for(String x:shipmentStatusList) {
+			shipments.addAll(shipmentRepository.findByShipmentStatus(x));
+		}
+		return shipments;
+	}
+	
+	public List<Shipment> getAllShipmentBySenderId(long senderId) {
+		List<Shipment> shipments = new ArrayList<Shipment>();
+		for(Shipment x:shipmentRepository.findBySenderID(senderId)){
+			shipments.add(x);
+		}
+		return shipments;
+	}
 
 	public Shipment createShipment(Map<String,String> allParams,Shipment shipment) {
 		shipment.setShipmentId(Long.toString(System.nanoTime()).substring(9));
@@ -37,6 +59,15 @@ public class ShipmentService {
 	public Shipment getShipmentById(String shipmentID) {
 		return shipmentRepository.findById(shipmentID)
 				.orElseThrow(() -> new ResourceNotFoundException("Shipment", "id", shipmentID));
+	}
+	
+	public Shipment getShipmentByAwbNo(String awbNo) {
+		Shipment shipment =  shipmentRepository.findByAwbNo(awbNo);
+		if(shipment==null) {
+			throw new ResourceNotFoundException("Shipment", "id", awbNo);
+		}else {
+			return shipment;
+		}
 	}
 
 	public Shipment updateShipment(String shipmentId, Shipment shipment) {
